@@ -1,5 +1,5 @@
-const denyText = ['Reject', 'Decline', 'Deny', 'Only essential', 'Decline optional', 'Decline optional cookies']
-const denyButton = ['reject-all-btn', 'reject-all-button', 'W0wltc', 'onetrust-reject-all-handler', 'btn-reject']
+const denyText = ['Reject', 'Decline', 'Deny', 'Only essential', 'Decline optional', 'Decline optional cookies', 'Do not consent']
+const denyButton = ['reject-all-btn', 'reject-all-button', 'W0wltc', 'onetrust-reject-all-handler', 'btn-reject', 'do-not-consent']
 const moreOptionsText = ['More Options']
 const moreOptionsButton = ['more-options-btn', 'more-options-button']
 const popupText = ['Not now']
@@ -38,7 +38,7 @@ function clickDenyButton(): Boolean {
 
 function clickMoreOptionsButton(): Boolean {
     var flag: Boolean = false
-    const buttons = Array.from(document.querySelectorAll('button, am div, span, [role="button"]')).sort((a, b) => {
+    const buttons = Array.from(document.querySelectorAll('button, a, div, span, [role="button"]')).sort((a, b) => {
         const aText = a.textContent?.trim() || ''
         const bText = b.textContent?.trim() || ''
         return aText.length - bText.length
@@ -65,11 +65,6 @@ function clickMoreOptionsButton(): Boolean {
         }
     }
     return flag
-}
-
-function hideCookieBanner(): Boolean {
-
-    return false
 }
 
 function hidePopups(): Boolean {
@@ -102,11 +97,9 @@ const interval = setInterval(() => {
     tries++;
     var deny: Boolean = clickDenyButton()
     var moreOptions: Boolean
-    var hide: Boolean
     if(!deny) {
         moreOptions = clickMoreOptionsButton()
         if(moreOptions) deny = clickDenyButton()
-        else hide = hideCookieBanner()
     }
     hidePopups()
     
